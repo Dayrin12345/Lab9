@@ -1,0 +1,33 @@
+#include <Arduino.h>
+
+#define P1 32 // Potenciómetro 1
+#define P2 34 // Potenciómetro 2
+#define B1 35 // BOTON
+
+int pot1 = 0;
+int pot2 = 0;
+
+void setup() {
+  Serial.begin(115200);
+  // configurar potenciometros
+  pinMode(P1, INPUT);
+  pinMode(P2, INPUT);
+
+  pinMode(B1, INPUT_PULLUP);
+}
+
+void loop() {
+  // leer valores de los potenciometros
+  unsigned int valorPot1 = analogRead(P1);
+  unsigned int valorPot2 = analogRead(P2);
+
+  // Convertir los valores de los potenciómetros a números hexadecimales
+  unsigned int numero1 = map(valorPot1, 0, 4095, 0, 15);  // Valor entre 0 y F
+  unsigned int numero2 = map(valorPot2, 0, 4095, 0, 15);  // Valor entre 0 y F
+  
+  // Enviar los valores por UART (serial)
+  Serial.write(numero1);
+  Serial.write(numero2);
+  
+  delay(1000);  // Esperar 1 segundo antes de enviar de nuevo
+}
