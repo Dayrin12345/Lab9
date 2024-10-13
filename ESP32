@@ -1,19 +1,20 @@
 #include <Arduino.h>
+#include <HardwareSerial.h>
 
 #define P1 32 // Potenciómetro 1
 #define P2 34 // Potenciómetro 2
-#define B1 35 // BOTON
 
 int pot1 = 0;
 int pot2 = 0;
+HardwareSerial UART_ESP32(2);  // UART2
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(9600); 
+  Serial.begin(115200); 
+  UART_ESP32.begin(115200, SERIAL_8N1, 16, 17); 
   // configurar potenciometros
   pinMode(P1, INPUT);
   pinMode(P2, INPUT);
-
-  pinMode(B1, INPUT_PULLUP);
 }
 
 void loop() {
@@ -26,8 +27,11 @@ void loop() {
   unsigned int numero2 = map(valorPot2, 0, 4095, 0, 15);  // Valor entre 0 y F
   
   // Enviar los valores por UART (serial)
-  Serial.write(numero1);
-  Serial.write(numero2);
+  Serial.println(numero1);
+  Serial.println(numero2);
+  UART_ESP32.print(numero1);
+  UART_ESP32.print(numero1);
+
   
   delay(1000);  // Esperar 1 segundo antes de enviar de nuevo
 }
