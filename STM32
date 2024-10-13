@@ -26,9 +26,9 @@ UART_HandleTypeDef huart5;
 
 /* USER CODE BEGIN PV */
 uint8_t rxBuffer[10]; // Buffer para recibir los datos del ESP32
-volatile bool b1_pressed = 0;
-volatile bool b2_pressed = 0;
-char numero1, numero2;
+uint8_t b1_pressed = 0;
+uint8_t b2_pressed = 0;
+uint8_t numero1, numero2;
 
 /* USER CODE END PV */
 
@@ -37,13 +37,13 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_UART5_Init(void);
 /* USER CODE BEGIN PFP */
-void mostrarNumero(char numero);
+void mostrarNumero(uint8_t numero);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 // Función para mostrar un número en el display de 7 segmentos
-void mostrarNumero(char numero) {
+void mostrarNumero(uint8_t numero) {
     // Apagar todos los segmentos
     HAL_GPIO_WritePin(GPIOB, segA|segB|segC|segD|segE|segF|segG, GPIO_PIN_RESET);
 
